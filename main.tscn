@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://d8w3w8bjm5bj"]
+
+[ext_resource type="PackedScene" uid="uid://cwymbelynjl4y" path="res://Environment/platform.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://datgcrpemi82f" path="res://main.gd" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://bb3hg4rgh163l" path="res://Environment/platforms.gd" id="2_7mycd"]
+[ext_resource type="PackedScene" uid="uid://ctyl00ala60p1" path="res://player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://ddvmnp27lrwqp" path="res://Environment/disappearing_platform.tscn" id="3_272bh"]
+[ext_resource type="PackedScene" uid="uid://gsqxe8fjusey" path="res://Environment/disappearing_wall.tscn" id="4_kek77"]
+[ext_resource type="Script" uid="uid://2m6np3afx5ij" path="res://debug.gd" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://b4k7cqb2jeurm" path="res://Environment/big_platform.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bll1ivjv2k55s" path="res://Environment/wall.tscn" id="8_5vw27"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_1bvp3")
+
+[node name="Platforms" type="Node" parent="."]
+script = ExtResource("2_7mycd")
+spawned_platform = ExtResource("3_272bh")
+spawned_wall = ExtResource("4_kek77")
+
+[node name="BigPlatform" parent="Platforms" instance=ExtResource("5_lquwl")]
+position = Vector2(573, 632)
+
+[node name="Platform" parent="Platforms" instance=ExtResource("1_0xm2m")]
+position = Vector2(319, 497)
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("1_0xm2m")]
+position = Vector2(586, 344)
+
+[node name="Platform3" parent="Platforms" instance=ExtResource("1_0xm2m")]
+position = Vector2(849, 496)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(320, 416)
+
+[node name="Debug" type="CanvasLayer" parent="CharacterBody2D"]
+script = ExtResource("4_lquwl")
+
+[node name="CharacterStateLabel" type="Label" parent="CharacterBody2D/Debug"]
+offset_right = 39.0
+offset_bottom = 23.0
+scale = Vector2(0.5, 0.5)
+text = "state"
+
+[node name="Camera2D2" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="Platform" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(-248, 488)
+
+[node name="Platform2" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(1392, 488)
+
+[node name="Platform3" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(56, 184)
+
+[node name="Platform4" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(1144, 192)
+
+[connection signal="character_state_debug" from="." to="CharacterBody2D/Debug" method="_on_main_character_state_debug"]
+[connection signal="character_state" from="CharacterBody2D" to="." method="_on_character_body_2d_character_state"]
+[connection signal="spawn_platform" from="CharacterBody2D" to="Platforms" method="_on_character_body_2d_spawn_platform"]
+[connection signal="spawn_wall" from="CharacterBody2D" to="Platforms" method="_on_character_body_2d_spawn_wall"]

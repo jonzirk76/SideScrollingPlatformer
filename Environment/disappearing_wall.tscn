@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://gsqxe8fjusey"]
+
+[ext_resource type="Script" uid="uid://nhg1im762pro" path="res://Environment/disappearing_platform.gd" id="1_ct1d7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ajho"]
+size = Vector2(16, 64)
+
+[node name="DisappearingWall" type="StaticBody2D"]
+script = ExtResource("1_ct1d7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5ajho")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(0.0625, 2)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-128, -16, 0, -16, 128, -16, 128, 0, 128, 16, -128, 16, -128, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

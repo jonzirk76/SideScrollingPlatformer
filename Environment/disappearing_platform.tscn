@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddvmnp27lrwqp"]
+
+[ext_resource type="Script" uid="uid://nhg1im762pro" path="res://Environment/disappearing_platform.gd" id="1_ktula"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ajho"]
+size = Vector2(64, 16)
+
+[node name="DisappearingPlatform" type="StaticBody2D"]
+script = ExtResource("1_ktula")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5ajho")
+one_way_collision = true
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, 2.86102e-06)
+scale = Vector2(0.25, 0.5)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-128, -16, -96.6678, -16, 128, -16, 128, -1.25494, 128, 16, -128, 16, -128, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
